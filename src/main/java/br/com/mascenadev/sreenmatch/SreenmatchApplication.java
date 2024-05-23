@@ -1,6 +1,8 @@
 package br.com.mascenadev.sreenmatch;
 
+import br.com.mascenadev.sreenmatch.model.DataSeries;
 import br.com.mascenadev.sreenmatch.service.ConsumeApi;
+import br.com.mascenadev.sreenmatch.service.ConvertData;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -30,11 +32,16 @@ public class SreenmatchApplication implements CommandLineRunner {
 		ConsumeApi consumeApi = new ConsumeApi();
 		var json = consumeApi.getData("https://www.omdbapi.com/?i=tt3896198&apikey=" + dotenv.get("OMDB_KEY"));
 		System.out.println(json);
+		System.out.println();
 		/* System.out.println("Digite o cep: ");
 		String cep = sc.nextLine();
 
 		var json = consumeApi.getData(("https://viacep.com.br/ws/" + cep + "/json/"));
 		System.out.println(json); */
+
+		ConvertData convertData = new ConvertData();
+		var dataSeries = convertData.convertData(json, DataSeries.class);
+		System.out.println(dataSeries);
 
 		sc.close();
 	}

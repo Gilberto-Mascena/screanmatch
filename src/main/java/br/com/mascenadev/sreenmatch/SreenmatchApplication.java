@@ -1,5 +1,6 @@
 package br.com.mascenadev.sreenmatch;
 
+import br.com.mascenadev.sreenmatch.model.DataEpisode;
 import br.com.mascenadev.sreenmatch.model.DataSeries;
 import br.com.mascenadev.sreenmatch.service.ConsumeApi;
 import br.com.mascenadev.sreenmatch.service.ConvertData;
@@ -30,7 +31,7 @@ public class SreenmatchApplication implements CommandLineRunner {
 		System.getProperty("OMDB_KEY");
 
 		ConsumeApi consumeApi = new ConsumeApi();
-		var json = consumeApi.getData("https://www.omdbapi.com/?i=tt3896198&apikey=" + dotenv.get("OMDB_KEY"));
+		var json = consumeApi.getData("http://www.omdbapi.com/?t=gilmore+girls&apiKey=" + dotenv.get("OMDB_KEY"));
 		System.out.println(json);
 		System.out.println();
 		/* System.out.println("Digite o cep: ");
@@ -39,9 +40,13 @@ public class SreenmatchApplication implements CommandLineRunner {
 		var json = consumeApi.getData(("https://viacep.com.br/ws/" + cep + "/json/"));
 		System.out.println(json); */
 
-		ConvertData convertData = new ConvertData();
-		var dataSeries = convertData.convertData(json, DataSeries.class);
+		ConvertData convert = new ConvertData();
+		var dataSeries = convert.convertData(json, DataSeries.class);
 		System.out.println(dataSeries);
+
+		json = ConsumeApi.getData("http://www.omdbapi.com/?t=gilmore+girls&season=1&episode=2&apikey=" + dotenv.get("OMDB_KEY"));
+		DataEpisode dataEpisode = convert.convertData(json, DataEpisode.class);
+		System.out.println(dataEpisode);
 
 		sc.close();
 	}

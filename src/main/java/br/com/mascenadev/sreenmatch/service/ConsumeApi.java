@@ -6,7 +6,7 @@ import java.net.http.HttpResponse;
 
 public class ConsumeApi {
 
-    public String getData(String address) {
+    public static String getData(String address) {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()

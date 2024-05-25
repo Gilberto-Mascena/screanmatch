@@ -1,4 +1,4 @@
-package br.com.mascenadev.sreenmatch.service;
+package br.com.mascenadev.screenmatch.service;
 
 public interface IConvertData {
 

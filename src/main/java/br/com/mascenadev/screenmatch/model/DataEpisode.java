@@ -1,4 +1,4 @@
-package br.com.mascenadev.sreenmatch.model;
+package br.com.mascenadev.screenmatch.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

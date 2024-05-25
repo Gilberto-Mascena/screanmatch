@@ -1,9 +1,9 @@
-package br.com.mascenadev.sreenmatch;
+package br.com.mascenadev.screenmatch;
 
-import br.com.mascenadev.sreenmatch.model.DataEpisode;
-import br.com.mascenadev.sreenmatch.model.DataSeries;
-import br.com.mascenadev.sreenmatch.service.ConsumeApi;
-import br.com.mascenadev.sreenmatch.service.ConvertData;
+import br.com.mascenadev.screenmatch.model.DataEpisode;
+import br.com.mascenadev.screenmatch.model.DataSeries;
+import br.com.mascenadev.screenmatch.service.ConsumeApi;
+import br.com.mascenadev.screenmatch.service.ConvertData;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

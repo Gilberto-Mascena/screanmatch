@@ -1,6 +1,7 @@
 package br.com.mascenadev.screenmatch;
 
-import br.com.mascenadev.screenmatch.model.DataEpisode;
+import br.com.mascenadev.screenmatch.model.DataEpisodes;
+import br.com.mascenadev.screenmatch.model.DataSeasons;
 import br.com.mascenadev.screenmatch.model.DataSeries;
 import br.com.mascenadev.screenmatch.service.ConsumeApi;
 import br.com.mascenadev.screenmatch.service.ConvertData;
@@ -9,6 +10,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -45,8 +48,18 @@ public class SreenmatchApplication implements CommandLineRunner {
 		System.out.println(dataSeries);
 
 		json = ConsumeApi.getData("http://www.omdbapi.com/?t=gilmore+girls&season=1&episode=2&apikey=" + dotenv.get("OMDB_KEY"));
-		DataEpisode dataEpisode = convert.convertData(json, DataEpisode.class);
+		DataEpisodes dataEpisode = convert.convertData(json, DataEpisodes.class);
 		System.out.println(dataEpisode);
+
+		List<DataSeasons> seasons = new ArrayList<>();
+
+		for (int i = 1; i <= dataSeries.totalSeasons(); i++) {
+			json = ConsumeApi.getData("http://www.omdbapi.com/?t=gilmore+girls&season=" + i + "&apikey=" + dotenv.get("OMDB_KEY"));
+			var dataSeason = convert.convertData(json, DataSeasons.class);
+			seasons.add(dataSeason);
+		}
+
+		seasons.forEach(System.out::println);
 
 		sc.close();
 	}

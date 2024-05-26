@@ -1,5 +1,6 @@
 package br.com.mascenadev.screenmatch.application;
 
+import br.com.mascenadev.screenmatch.model.DataEpisodes;
 import br.com.mascenadev.screenmatch.model.DataSeasons;
 import br.com.mascenadev.screenmatch.model.DataSeries;
 import br.com.mascenadev.screenmatch.service.ConsumeApi;
@@ -7,8 +8,10 @@ import br.com.mascenadev.screenmatch.service.ConvertData;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -47,6 +50,17 @@ public class Main {
         } */
 
         seasons.forEach(s -> s.episodes().forEach(e -> System.out.println(e.title())));
+
+        List<DataEpisodes> dataEpisodes = seasons.stream()
+                .flatMap(s -> s.episodes().stream())
+                .collect(Collectors.toList());
+
+        System.out.println("\n Top 5 episódios com maior avaliação: ");
+        dataEpisodes.stream()
+                .sorted(Comparator.comparing(DataEpisodes::rating).reversed())
+                .limit(5)
+                .forEach(System.out::println);
+
 
         sc.close();
     }

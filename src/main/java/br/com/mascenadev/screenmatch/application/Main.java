@@ -3,6 +3,7 @@ package br.com.mascenadev.screenmatch.application;
 import br.com.mascenadev.screenmatch.model.DataEpisodes;
 import br.com.mascenadev.screenmatch.model.DataSeasons;
 import br.com.mascenadev.screenmatch.model.DataSeries;
+import br.com.mascenadev.screenmatch.model.Episodes;
 import br.com.mascenadev.screenmatch.service.ConsumeApi;
 import br.com.mascenadev.screenmatch.service.ConvertData;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -61,6 +62,13 @@ public class Main {
                 .sorted(Comparator.comparing(DataEpisodes::rating).reversed())
                 .limit(5)
                 .forEach(System.out::println);
+
+        List<Episodes> episodes = seasons.stream()
+                .flatMap(t -> t.episodes().stream()
+                .map(d -> new Episodes(t.season(), d)))
+                .collect(Collectors.toList());
+
+        episodes.forEach(System.out::println);
 
 
         sc.close();

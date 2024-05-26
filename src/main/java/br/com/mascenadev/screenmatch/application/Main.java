@@ -57,6 +57,7 @@ public class Main {
 
         System.out.println("\n Top 5 episódios com maior avaliação: ");
         dataEpisodes.stream()
+                .filter(e -> !e.rating().equalsIgnoreCase("N/A"))
                 .sorted(Comparator.comparing(DataEpisodes::rating).reversed())
                 .limit(5)
                 .forEach(System.out::println);

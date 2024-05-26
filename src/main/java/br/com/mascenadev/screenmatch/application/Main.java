@@ -8,6 +8,8 @@ import br.com.mascenadev.screenmatch.service.ConsumeApi;
 import br.com.mascenadev.screenmatch.service.ConvertData;
 import io.github.cdimascio.dotenv.Dotenv;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -69,6 +71,22 @@ public class Main {
                 .collect(Collectors.toList());
 
         episodes.forEach(System.out::println);
+
+        System.out.println("A partir de qual ano deseja ver os episódios? ");
+        var year = sc.nextInt();
+        System.out.println();
+
+        LocalDate date = LocalDate.of(year, 1, 1);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        episodes.stream()
+                .filter(e -> e.getReleased() != null && e.getReleased().isAfter(date))
+                .forEach(e -> System.out.println(
+                        "Temporada: " +e.getSeason()
+                        + " Episódio: " + e.getNumberEpisode()
+                        + " Data de Lançamento: " + e.getReleased().format(formatter)
+                ));
 
 
         sc.close();

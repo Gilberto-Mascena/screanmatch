@@ -1,6 +1,5 @@
 package br.com.mascenadev.screenmatch.application;
 
-import br.com.mascenadev.screenmatch.model.DataEpisodes;
 import br.com.mascenadev.screenmatch.model.DataSeasons;
 import br.com.mascenadev.screenmatch.model.DataSeries;
 import br.com.mascenadev.screenmatch.model.Episodes;
@@ -8,11 +7,9 @@ import br.com.mascenadev.screenmatch.service.ConsumeApi;
 import br.com.mascenadev.screenmatch.service.ConvertData;
 import io.github.cdimascio.dotenv.Dotenv;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -29,7 +26,7 @@ public class Main {
 
     public void displaysMenu() {
 
-        System.out.println("Digite o nome da Série desejada: ");
+         System.out.println("Digite o nome da Série desejada: ");
         var data = sc.nextLine();
         var json = consumeApi.getData(ADDRESS + data.replace(" ", "+") + API_KEY);
         DataSeries dataSeries = convert.convertData(json, DataSeries.class);
@@ -43,18 +40,9 @@ public class Main {
 			seasons.add(dataSeason);
 		}
 
-		seasons.forEach(System.out::println);
+		/*seasons.forEach(System.out::println);
 
-        /* for (int i = 0; i < dataSeries.totalSeasons(); i++) {
-            List<DataEpisodes> episodes = seasons.get(i).episodes();
-            for (int j = 0; j < episodes.size(); j++) {
-                System.out.println(episodes.get(j).title());
-            }
-        } */
-
-        seasons.forEach(s -> s.episodes().forEach(e -> System.out.println(e.title())));
-
-        List<DataEpisodes> dataEpisodes = seasons.stream()
+         List<DataEpisodes> dataEpisodes = seasons.stream()
                 .flatMap(s -> s.episodes().stream())
                 .collect(Collectors.toList());
 
@@ -63,7 +51,7 @@ public class Main {
                 .filter(e -> !e.rating().equalsIgnoreCase("N/A"))
                 .sorted(Comparator.comparing(DataEpisodes::rating).reversed())
                 .limit(5)
-                .forEach(System.out::println);
+                .forEach(System.out::println);*/
 
         List<Episodes> episodes = seasons.stream()
                 .flatMap(t -> t.episodes().stream()
@@ -72,7 +60,21 @@ public class Main {
 
         episodes.forEach(System.out::println);
 
-        System.out.println("A partir de qual ano deseja ver os episódios? ");
+        System.out.println("Digte o nome do episódio que deseja ver: ");
+
+        var episode = sc.nextLine();
+
+        Optional<Episodes> episodeSearch = episodes.stream()
+                .filter(e -> e.getTitle().toUpperCase().contains(episode.toUpperCase()))
+                .findFirst();
+
+        if (episodeSearch.isPresent()) {
+            System.out.println("Episódio encontrado! \nTemporada :" + episodeSearch.get().getSeason());
+        } else {
+            System.out.println("Episódio não encontrado");
+        }
+
+        /*System.out.println("A partir de qual ano deseja ver os episódios? ");
         var year = sc.nextInt();
         System.out.println();
 
@@ -86,7 +88,7 @@ public class Main {
                         "Temporada: " +e.getSeason()
                         + " Episódio: " + e.getNumberEpisode()
                         + " Data de Lançamento: " + e.getReleased().format(formatter)
-                ));
+                ));*/
 
 
         sc.close();

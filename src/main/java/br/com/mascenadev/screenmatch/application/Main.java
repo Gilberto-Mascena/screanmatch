@@ -92,7 +92,20 @@ public class Main {
                 .collect(Collectors.groupingBy(Episodes::getSeason,
                 Collectors.averagingDouble(Episodes::getRating)));
 
-        System.out.println("\nMédia de avaliação por temporada: " + reviewSeason);
+        //System.out.println("\nMédia de avaliação por temporada: " + reviewSeason);
+
+        DoubleSummaryStatistics statistics = episodes.stream()
+                .filter(e -> e.getRating() > 0.0)
+                .collect(Collectors.summarizingDouble(Episodes::getRating));
+
+        System.out.println("\nMédia de avaliações: "
+                + statistics.getAverage()
+                + "\nMelhor episódio: "
+                + statistics.getMax()
+                + "\nPior episódio: "
+                + statistics.getMin()
+                + "\nQauntidade: "
+                + statistics.getCount());
 
 
         sc.close();

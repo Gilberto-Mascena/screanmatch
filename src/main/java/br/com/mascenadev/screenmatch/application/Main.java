@@ -7,10 +7,7 @@ import br.com.mascenadev.screenmatch.service.ConsumeApi;
 import br.com.mascenadev.screenmatch.service.ConvertData;
 import io.github.cdimascio.dotenv.Dotenv;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -60,7 +57,7 @@ public class Main {
 
         episodes.forEach(System.out::println);
 
-        System.out.println("Digte o nome do episódio que deseja ver: ");
+        /*System.out.println("Digte o nome do episódio que deseja ver: ");
 
         var episode = sc.nextLine();
 
@@ -72,7 +69,7 @@ public class Main {
             System.out.println("Episódio encontrado! \nTemporada :" + episodeSearch.get().getSeason());
         } else {
             System.out.println("Episódio não encontrado");
-        }
+        }*/
 
         /*System.out.println("A partir de qual ano deseja ver os episódios? ");
         var year = sc.nextInt();
@@ -89,6 +86,13 @@ public class Main {
                         + " Episódio: " + e.getNumberEpisode()
                         + " Data de Lançamento: " + e.getReleased().format(formatter)
                 ));*/
+
+        Map<Integer, Double> reviewSeason = episodes.stream()
+                .filter(e -> e.getRating() > 0.0)
+                .collect(Collectors.groupingBy(Episodes::getSeason,
+                Collectors.averagingDouble(Episodes::getRating)));
+
+        System.out.println("\nMédia de avaliação por temporada: " + reviewSeason);
 
 
         sc.close();

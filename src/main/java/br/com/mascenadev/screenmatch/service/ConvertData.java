@@ -3,7 +3,7 @@ package br.com.mascenadev.screenmatch.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ConvertData implements IConvertData{
+public class ConvertData implements IConvertData {
 
     public ObjectMapper objectMapper = new ObjectMapper();
 

@@ -8,18 +8,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ScreenmatchApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		SpringApplication.run(ScreenmatchApplication.class, args);
+        SpringApplication.run(ScreenmatchApplication.class, args);
+    }
 
-		}
+    @Override
+    public void run(String... args) {
 
-	@Override
-	public void run(String... args) {
+        Main main = new Main();
 
-		Main main = new Main();
-
-		System.out.println();
-		main.displaysMenu();
-	}
+        System.out.println();
+        main.displaysMenu();
+    }
 }

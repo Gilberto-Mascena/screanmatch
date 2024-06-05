@@ -71,7 +71,7 @@ public class Episodes {
 
     @Override
     public String toString() {
-        return  "season=" + season +
+        return "season=" + season +
                 ", title='" + title + '\'' +
                 ", numberEpisode=" + numberEpisode +
                 ", rating=" + rating +

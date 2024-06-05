@@ -3,15 +3,9 @@ package br.com.mascenadev.screenmatch.model.enums;
 public enum Category {
 
     ACTION("Action"),
-    ADVENTURE("Adventure"),
-    ANIMATION("Animation"),
-    COMEDY("Comedy"),
-    CRIME("Crime"),
-    DRAMA("Drama"),
-    FAMILY("Family"),
     ROMANCE("Romance"),
-    THRILLER("Thriller"),
-    WAR("War"),;
+    COMEDY("Comedy"),
+    CRIME("Crime");
 
     private String categoryOmdb;
 
@@ -21,10 +15,10 @@ public enum Category {
 
     public static Category fromString(String text) {
         for (Category category : Category.values()) {
-            if (category.categoryOmdb.equals(text)) {
+            if (category.categoryOmdb.equalsIgnoreCase(text)) {
                 return category;
             }
         }
-        throw new IllegalArgumentException("Nenhuma categoria encontrada: " );
+        throw new IllegalArgumentException("Nenhuma categoria encontrada: ");
     }
 }

@@ -34,6 +34,7 @@ build/
 
 ### .env ###
 .env
+.env-db
 
 ### OS ###
 .DS_Store

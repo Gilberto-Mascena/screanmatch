@@ -1,12 +1,17 @@
 package br.com.mascenadev.screenmatch.application;
 
-import br.com.mascenadev.screenmatch.model.*;
+import br.com.mascenadev.screenmatch.model.DataSeasons;
+import br.com.mascenadev.screenmatch.model.DataSeries;
+import br.com.mascenadev.screenmatch.model.Serie;
+import br.com.mascenadev.screenmatch.repository.SerieRepository;
 import br.com.mascenadev.screenmatch.service.ConsumeApi;
 import br.com.mascenadev.screenmatch.service.ConvertData;
 import io.github.cdimascio.dotenv.Dotenv;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
@@ -16,9 +21,13 @@ public class Main {
     private final String ADDRESS = "http://www.omdbapi.com/?t=";
     private Dotenv dotenv = Dotenv.load();
     private final String API_KEY = "&apiKey=" + dotenv.get("OMDB_KEY");
-    private List<DataSeries> dataSeries = new ArrayList<>();
 
     private Scanner sc = new Scanner(System.in);
+    private SerieRepository serieRepository;
+
+    public Main(SerieRepository serieRepository) {
+        this.serieRepository = serieRepository;
+    }
 
     public void displaysMenu() {
 
@@ -58,11 +67,8 @@ public class Main {
     }
 
     private void listSeries() {
-        List<Serie> series = new ArrayList<>();
-
-        series = dataSeries.stream()
-                .map(d -> new Serie(d))
-                .collect(Collectors.toList());
+        List<Serie>
+                series = serieRepository.findAll();
         series.stream()
                 .sorted(Comparator.comparing(Serie::getGenre))
                 .forEach(System.out::println);
@@ -74,7 +80,7 @@ public class Main {
         List<DataSeasons> seasons = new ArrayList<>();
 
         for (int i = 1; i <= dataSeries.totalSeasons(); i++) {
-            var json = ConsumeApi.getData(ADDRESS + dataSeries.title().replace(" ", "+") + "&season=" + i + "&apikey=" + dotenv.get("OMDB_KEY"));
+            var json = ConsumeApi.getData(ADDRESS + dataSeries.title().replace(" ", "+") + "&season=" + i + API_KEY);
             DataSeasons dataSeason = convert.convertData(json, DataSeasons.class);
             seasons.add(dataSeason);
         }
@@ -83,7 +89,9 @@ public class Main {
 
     private void searchWebSeries() {
         DataSeries data = getDataSeries();
-        dataSeries.add(data);
+        //dataSeries.add(data);
+        Serie serie = new Serie(data);
+        serieRepository.save(serie);
         System.out.println(data);
     }
 

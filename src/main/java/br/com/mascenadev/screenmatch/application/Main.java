@@ -74,13 +74,21 @@ public class Main {
 
     }
 
-    private void listSeries() {
+    private DataSeries getDataSeries() {
 
-        series = serieRepository.findAll();
-        series.stream()
-                .sorted(Comparator.comparing(Serie::getGenre))
-                .forEach(System.out::println);
+        System.out.println("Digite o nome da Série desejada: ");
+        var data = sc.nextLine();
+        var json = consumeApi.getData(ADDRESS + data.replace(" ", "+") + API_KEY);
+        DataSeries dataSeries = convert.convertData(json, DataSeries.class);
+        return dataSeries;
+    }
 
+    private void searchWebSeries() {
+
+        DataSeries data = getDataSeries();
+        Serie serie = new Serie(data);
+        serieRepository.save(serie);
+        System.out.println(data);
     }
 
     private void searchEpisodeBySeries() {
@@ -115,23 +123,14 @@ public class Main {
         }
     }
 
-    private void searchWebSeries() {
+    private void listSeries() {
 
-        DataSeries data = getDataSeries();
-        Serie serie = new Serie(data);
-        serieRepository.save(serie);
-        System.out.println(data);
+        series = serieRepository.findAll();
+        series.stream()
+                .sorted(Comparator.comparing(Serie::getGenre))
+                .forEach(System.out::println);
+
     }
-
-    private DataSeries getDataSeries() {
-
-        System.out.println("Digite o nome da Série desejada: ");
-        var data = sc.nextLine();
-        var json = consumeApi.getData(ADDRESS + data.replace(" ", "+") + API_KEY);
-        DataSeries dataSeries = convert.convertData(json, DataSeries.class);
-        return dataSeries;
-    }
-
 
     private void searchSeriesByTitle() {
 
@@ -144,7 +143,6 @@ public class Main {
             System.out.println("Série não encontrada");
         }
     }
-
 
     private void searchSeriesByActor() {
 

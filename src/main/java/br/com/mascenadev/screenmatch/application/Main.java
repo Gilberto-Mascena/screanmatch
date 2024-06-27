@@ -39,6 +39,7 @@ public class Main {
                     3 - Listar séries buscadas
                     4 - Buscar série por titulo
                     5 - Buscar séries por ator
+                    6 - Top 5 séries
                                  
                     0 - Sair
                     """;
@@ -62,6 +63,9 @@ public class Main {
                     break;
                 case 5:
                     searchSeriesByActor();
+                    break;
+                case 6:
+                    searchTop5Series();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -152,6 +156,14 @@ public class Main {
         var rating = sc.nextDouble();
         List<Serie> seriesFound = serieRepository.findByActorsContainingIgnoreCaseAndImdbRatingGreaterThanEqual(nameOfActor, rating);
         System.out.println("Séries em que o ator " + nameOfActor + " participou: ");
-        seriesFound.forEach(s -> System.out.println(s.getTitle() + "avaliação: " + s.getImdbRating()));
+        seriesFound.forEach(s ->
+                System.out.println(s.getTitle() + " avaliação: " + s.getImdbRating()));
+    }
+
+    private void searchTop5Series() {
+
+        List<Serie> seriesTopFive = serieRepository.findTop5ByOrderByImdbRatingDesc();
+        seriesTopFive.forEach(s ->
+                System.out.println(s.getTitle() + " avaliação: " + s.getImdbRating()    ));
     }
 }

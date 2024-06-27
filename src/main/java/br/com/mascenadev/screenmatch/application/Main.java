@@ -38,6 +38,7 @@ public class Main {
                     2 - Buscar episódios
                     3 - Listar séries buscadas
                     4 - Buscar série por titulo
+                    5 - Buscar séries por ator
                                  
                     0 - Sair
                     """;
@@ -58,6 +59,9 @@ public class Main {
                     break;
                 case 4:
                     searchSeriesByTitle();
+                    break;
+                case 5:
+                    searchSeriesByActor();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -139,5 +143,17 @@ public class Main {
         } else {
             System.out.println("Série não encontrada");
         }
+    }
+
+
+    private void searchSeriesByActor() {
+
+        System.out.println("Digite o nome do ator?: ");
+        var nameOfActor = sc.nextLine();
+        System.out.println("Avaliação a partir de qual nota?");
+        var rating = sc.nextDouble();
+        List<Serie> seriesFound = serieRepository.findByActorsContainingIgnoreCaseAndImdbRatingGreaterThanEqual(nameOfActor, rating);
+        System.out.println("Séries em que o ator " + nameOfActor + " participou: ");
+        seriesFound.forEach(s -> System.out.println(s.getTitle() + "avaliação: " + s.getImdbRating()));
     }
 }

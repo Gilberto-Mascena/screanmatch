@@ -6,17 +6,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 @Entity
-@Table(name = "episodes")
+@Table(name = "episodios")
 public class Episodes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer season;
-    private String title;
-    private Integer numberEpisode;
-    private Double rating;
-    private LocalDate released;
+    private Integer temporada;
+    private String titulo;
+    private Integer episodio;
+    private Double avaliacao;
+    private LocalDate anoLancamento;
 
     @ManyToOne
     private Serie serie;
@@ -24,21 +24,21 @@ public class Episodes {
     public Episodes() {
     }
 
-    public Episodes(Integer numberSeason, DataEpisodes dataEpisodes) {
-        this.season = numberSeason;
-        this.title = dataEpisodes.title();
-        this.numberEpisode = dataEpisodes.numberEpisode();
+    public Episodes(Integer temporada, DataEpisodes dataEpisodes) {
+        this.temporada = temporada;
+        this.titulo = dataEpisodes.titulo();
+        this.episodio = dataEpisodes.episodio();
 
         try {
-            this.rating = Double.parseDouble(dataEpisodes.rating());
+            this.avaliacao = Double.parseDouble(dataEpisodes.avaliacao());
         } catch (NumberFormatException ex) {
-            this.rating = 0.0;
+            this.avaliacao = 0.0;
         }
 
         try {
-            this.released = LocalDate.parse(dataEpisodes.released());
+            this.anoLancamento = LocalDate.parse(dataEpisodes.anoLancamento());
         } catch (DateTimeParseException ex) {
-            this.released = null;
+            this.anoLancamento = null;
         }
     }
 
@@ -50,6 +50,46 @@ public class Episodes {
         this.id = id;
     }
 
+    public Integer getTemporada() {
+        return temporada;
+    }
+
+    public void setTemporada(Integer temporada) {
+        this.temporada = temporada;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public Integer getEpisodio() {
+        return episodio;
+    }
+
+    public void setEpisodio(Integer episodio) {
+        this.episodio = episodio;
+    }
+
+    public Double getAvaliacao() {
+        return avaliacao;
+    }
+
+    public void setAvaliacao(Double avaliacao) {
+        this.avaliacao = avaliacao;
+    }
+
+    public LocalDate getAnoLancamento() {
+        return anoLancamento;
+    }
+
+    public void setAnoLancamento(LocalDate anoLancamento) {
+        this.anoLancamento = anoLancamento;
+    }
+
     public Serie getSerie() {
         return serie;
     }
@@ -58,52 +98,12 @@ public class Episodes {
         this.serie = serie;
     }
 
-    public Integer getSeason() {
-        return season;
-    }
-
-    public void setSeason(Integer season) {
-        this.season = season;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Integer getNumberEpisode() {
-        return numberEpisode;
-    }
-
-    public void setNumberEpisode(Integer numberEpisode) {
-        this.numberEpisode = numberEpisode;
-    }
-
-    public Double getRating() {
-        return rating;
-    }
-
-    public void setRating(Double rating) {
-        this.rating = rating;
-    }
-
-    public LocalDate getReleased() {
-        return released;
-    }
-
-    public void setReleased(LocalDate released) {
-        this.released = released;
-    }
-
     @Override
     public String toString() {
-        return "season=" + season +
-                ", title='" + title + '\'' +
-                ", numberEpisode=" + numberEpisode +
-                ", rating=" + rating +
-                ", released=" + released;
+        return "temporada= " + temporada +
+                ", titulo= '" + titulo + '\'' +
+                ", epsodio= " + episodio +
+                ", avaliação= " + avaliacao +
+                ", anoLançamento= " + anoLancamento;
     }
 }

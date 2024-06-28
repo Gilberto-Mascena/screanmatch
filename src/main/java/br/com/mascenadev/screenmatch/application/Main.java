@@ -4,6 +4,7 @@ import br.com.mascenadev.screenmatch.model.DataSeasons;
 import br.com.mascenadev.screenmatch.model.DataSeries;
 import br.com.mascenadev.screenmatch.model.Episodes;
 import br.com.mascenadev.screenmatch.model.Serie;
+import br.com.mascenadev.screenmatch.model.enums.Category;
 import br.com.mascenadev.screenmatch.repository.SerieRepository;
 import br.com.mascenadev.screenmatch.service.ConsumeApi;
 import br.com.mascenadev.screenmatch.service.ConvertData;
@@ -40,6 +41,7 @@ public class Main {
                     4 - Buscar série por titulo
                     5 - Buscar séries por ator
                     6 - Top 5 séries
+                    7 - Buscar séries por categoria
                                  
                     0 - Sair
                     """;
@@ -66,6 +68,9 @@ public class Main {
                     break;
                 case 6:
                     searchTop5Series();
+                    break;
+                case 7:
+                    searchSeriesByCategory();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -101,24 +106,24 @@ public class Main {
         System.out.println("Digite o nome da Série desejada: ");
         var nameSerie = sc.nextLine();
 
-        Optional<Serie> serie = serieRepository.findByTitleContainingIgnoreCase(nameSerie);
+        Optional<Serie> serie = serieRepository.findByTituloContainingIgnoreCase(nameSerie);
 
         if (serie.isPresent()) {
 
             var foundSeries = serie.get();
             List<DataSeasons> seasons = new ArrayList<>();
 
-            for (int i = 1; i <= foundSeries.getTotalSeasons(); i++) {
+            for (int i = 1; i <= foundSeries.getTotalTemporadas(); i++) {
 
-                var json = ConsumeApi.getData(ADDRESS + foundSeries.getTitle().replace(" ", "+") + "&season=" + i + API_KEY);
+                var json = ConsumeApi.getData(ADDRESS + foundSeries.getTitulo().replace(" ", "+") + "&season=" + i + API_KEY);
                 DataSeasons dataSeason = convert.convertData(json, DataSeasons.class);
                 seasons.add(dataSeason);
             }
             seasons.forEach(System.out::println);
 
             List<Episodes> episodes = seasons.stream()
-                    .flatMap((d -> d.episodes().stream()
-                            .map(e -> new Episodes(d.season(), e))))
+                    .flatMap((d -> d.episodios().stream()
+                            .map(e -> new Episodes(d.temporada(), e))))
                     .collect(Collectors.toList());
             foundSeries.setEpisodes(episodes);
             serieRepository.save(foundSeries);
@@ -131,7 +136,7 @@ public class Main {
 
         series = serieRepository.findAll();
         series.stream()
-                .sorted(Comparator.comparing(Serie::getGenre))
+                .sorted(Comparator.comparing(Serie::getGenero))
                 .forEach(System.out::println);
 
     }
@@ -140,7 +145,7 @@ public class Main {
 
         System.out.println("Digite o nome da Série desejada: ");
         var nameSerie = sc.nextLine();
-        Optional<Serie> seriesSearched = serieRepository.findByTitleContainingIgnoreCase(nameSerie);
+        Optional<Serie> seriesSearched = serieRepository.findByTituloContainingIgnoreCase(nameSerie);
         if (seriesSearched.isPresent()) {
             System.out.println("Dados da série: " + seriesSearched.get());
         } else {
@@ -150,20 +155,29 @@ public class Main {
 
     private void searchSeriesByActor() {
 
-        System.out.println("Digite o nome do ator?: ");
+        System.out.println("Digite o nome do ator: ");
         var nameOfActor = sc.nextLine();
         System.out.println("Avaliação a partir de qual nota?");
         var rating = sc.nextDouble();
-        List<Serie> seriesFound = serieRepository.findByActorsContainingIgnoreCaseAndImdbRatingGreaterThanEqual(nameOfActor, rating);
+        List<Serie> seriesFound = serieRepository.findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(nameOfActor, rating);
         System.out.println("Séries em que o ator " + nameOfActor + " participou: ");
         seriesFound.forEach(s ->
-                System.out.println(s.getTitle() + " avaliação: " + s.getImdbRating()));
+                System.out.println(s.getTitulo() + " avaliação: " + s.getAvaliacao()));
     }
 
     private void searchTop5Series() {
 
-        List<Serie> seriesTopFive = serieRepository.findTop5ByOrderByImdbRatingDesc();
+        List<Serie> seriesTopFive = serieRepository.findTop5ByOrderByAvaliacaoDesc();
         seriesTopFive.forEach(s ->
-                System.out.println(s.getTitle() + " avaliação: " + s.getImdbRating()    ));
+                System.out.println(s.getTitulo() + " avaliação: " + s.getAvaliacao()));
+    }
+
+    private void searchSeriesByCategory() {
+
+        System.out.println("Digite a categoria desejada / gênero: ");
+        var category = sc.nextLine();
+        List<Serie> seriesFound = serieRepository.findByGenero(Category.fromString(category));
+        seriesFound.forEach(s ->
+                System.out.println(s.getTitulo() + " avaliação: " + s.getAvaliacao()));
     }
 }

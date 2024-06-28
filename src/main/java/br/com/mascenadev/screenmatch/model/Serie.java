@@ -17,32 +17,32 @@ public class Serie {
     private Long id;
 
     @Column(unique = true)
-    private String title;
-    private String year;
-    private Integer totalSeasons;
+    private String titulo;
+    private String ano;
+    private Integer totalTemporadas;
 
     @Enumerated(EnumType.STRING)
-    private Category genre;
-    private Double imdbRating;
-    private String synopsis;
+    private Category genero;
+    private Double avaliacao;
+    private String sinopse;
     private String poster;
-    private String actors;
+    private String atores;
 
     @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Episodes> episodes = new ArrayList<>();
+    private List<Episodes> episodios = new ArrayList<>();
 
     public Serie() {
     }
 
     public Serie(DataSeries dataSeries) {
-        this.title = dataSeries.title();
-        this.year = dataSeries.year();
-        this.totalSeasons = dataSeries.totalSeasons();
-        this.genre = Category.fromString(dataSeries.genre().split(",")[0].trim());
-        this.imdbRating = OptionalDouble.of(Double.valueOf(dataSeries.imdbRating())).orElse(0.0);
-        this.synopsis = ChatGPTConsultation.getTranslation(dataSeries.synopsis()).trim();
+        this.titulo = dataSeries.titulo();
+        this.ano = dataSeries.ano();
+        this.totalTemporadas = dataSeries.totalTemporadas();
+        this.genero = Category.fromString(dataSeries.genero().split(",")[0].trim());
+        this.avaliacao = OptionalDouble.of(Double.valueOf(dataSeries.avaliacao())).orElse(0.0);
+        this.sinopse = ChatGPTConsultation.getTranslation(dataSeries.sinopse()).trim();
         this.poster = dataSeries.poster();
-        this.actors = dataSeries.actors();
+        this.atores = dataSeries.atores();
     }
 
     public Long getId() {
@@ -53,52 +53,52 @@ public class Serie {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public String getYear() {
-        return year;
+    public String getAno() {
+        return ano;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setAno(String ano) {
+        this.ano = ano;
     }
 
-    public Integer getTotalSeasons() {
-        return totalSeasons;
+    public Integer getTotalTemporadas() {
+        return totalTemporadas;
     }
 
-    public void setTotalSeasons(Integer totalSeasons) {
-        this.totalSeasons = totalSeasons;
+    public void setTotalTemporadas(Integer totalTemporadas) {
+        this.totalTemporadas = totalTemporadas;
     }
 
-    public Category getGenre() {
-        return genre;
+    public Category getGenero() {
+        return genero;
     }
 
-    public void setGenre(Category genre) {
-        this.genre = genre;
+    public void setGenero(Category genero) {
+        this.genero = genero;
     }
 
-    public Double getImdbRating() {
-        return imdbRating;
+    public Double getAvaliacao() {
+        return avaliacao;
     }
 
-    public void setImdbRating(Double imdbRating) {
-        this.imdbRating = imdbRating;
+    public void setAvaliacao(Double avaliacao) {
+        this.avaliacao = avaliacao;
     }
 
-    public String getPlot() {
-        return synopsis;
+    public String getSinopse() {
+        return sinopse;
     }
 
-    public void setPlot(String plot) {
-        this.synopsis = plot;
+    public void setSinopse(String sinopse) {
+        this.sinopse = sinopse;
     }
 
     public String getPoster() {
@@ -109,34 +109,34 @@ public class Serie {
         this.poster = poster;
     }
 
-    public String getActors() {
-        return actors;
+    public String getAtores() {
+        return atores;
     }
 
-    public void setActors(String actors) {
-        this.actors = actors;
+    public void setAtores(String atores) {
+        this.atores = atores;
     }
 
     public List<Episodes> getEpisodes() {
-        return episodes;
+        return episodios;
     }
 
-    public void setEpisodes(List<Episodes> episodes) {
-        episodes.forEach(e -> e.setSerie(this));
-        this.episodes = episodes;
+    public void setEpisodes(List<Episodes> episodios) {
+        episodios.forEach(e -> e.setSerie(this));
+        this.episodios = episodios;
     }
 
     @Override
     public String toString() {
         return
-                "genre=" + genre
-                        + ", title='" + title + '\''
-                        + ", year=" + year + '\''
-                        + ", totalSeasons=" + totalSeasons
-                        + ", imdbRating=" + imdbRating
-                        + ", plot='" + synopsis + '\''
-                        + ", poster='" + poster + '\''
-                        + ", actors='" + actors + '\''
-                        + ", episodes=" + episodes;
+                "genero= " + genero
+                        + ", titulo= '" + titulo + '\''
+                        + ", ano= " + ano + '\''
+                        + ", totalTemporadas= " + totalTemporadas
+                        + ", avaliacao= " + avaliacao
+                        + ", sinopse= '" + sinopse + '\''
+                        + ", poster= '" + poster + '\''
+                        + ", atores= '" + atores + '\''
+                        + ", episodes= " + episodios;
     }
 }

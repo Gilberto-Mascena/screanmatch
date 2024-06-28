@@ -20,10 +20,10 @@ public class Main {
     private ConsumeApi consumeApi = new ConsumeApi();
     private ConvertData convert = new ConvertData();
     private final String ADDRESS = "http://www.omdbapi.com/?t=";
-    private Dotenv dotenv = Dotenv.load();
+    private final Dotenv dotenv = Dotenv.load();
     private final String API_KEY = "&apiKey=" + dotenv.get("OMDB_KEY");
-    private Scanner sc = new Scanner(System.in);
-    private SerieRepository serieRepository;
+    private final Scanner sc = new Scanner(System.in);
+    private final SerieRepository serieRepository;
     private List<Serie> series = new ArrayList<>();
 
     public Main(SerieRepository serieRepository) {
@@ -42,6 +42,7 @@ public class Main {
                     5 - Buscar séries por ator
                     6 - Top 5 séries
                     7 - Buscar séries por categoria
+                    8 - Filtrar séries
                                  
                     0 - Sair
                     """;
@@ -71,6 +72,9 @@ public class Main {
                     break;
                 case 7:
                     searchSeriesByCategory();
+                    break;
+                case 8:
+                    filterSeries();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -180,5 +184,17 @@ public class Main {
         List<Serie> seriesFound = serieRepository.findByGenero(categotyGenre);
         System.out.println("Séries da categoria " + category + ": ");
         seriesFound.forEach(System.out::println);
+    }
+
+    private void filterSeries() {
+
+        System.out.println("Digite o número de temporadas desejado: ");
+        var totalSeasons = sc.nextInt();
+        System.out.println("Avaliação a partir de qual nota: ");
+        var rating = sc.nextDouble();
+        List<Serie> seriesFound = serieRepository.seriesBySeasonsEvaluation(totalSeasons, rating);
+        System.out.println("\n*** Séries filtradas ***");
+        seriesFound.forEach(s ->
+                System.out.println(s.getTitulo() + " avaliação: " + s.getAvaliacao()));
     }
 }

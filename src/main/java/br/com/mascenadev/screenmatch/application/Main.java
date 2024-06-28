@@ -176,8 +176,9 @@ public class Main {
 
         System.out.println("Digite a categoria desejada / gênero: ");
         var category = sc.nextLine();
-        List<Serie> seriesFound = serieRepository.findByGenero(Category.fromString(category));
-        seriesFound.forEach(s ->
-                System.out.println(s.getTitulo() + " avaliação: " + s.getAvaliacao()));
+        Category categotyGenre = Category.fromStringPortuguese(category);
+        List<Serie> seriesFound = serieRepository.findByGenero(categotyGenre);
+        System.out.println("Séries da categoria " + category + ": ");
+        seriesFound.forEach(System.out::println);
     }
 }

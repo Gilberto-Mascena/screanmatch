@@ -130,13 +130,13 @@ public class Serie {
     public String toString() {
         return
                 "genero= " + genero
-                        + ", titulo= '" + titulo + '\''
-                        + ", ano= " + ano + '\''
-                        + ", totalTemporadas= " + totalTemporadas
-                        + ", avaliacao= " + avaliacao
-                        + ", sinopse= '" + sinopse + '\''
-                        + ", poster= '" + poster + '\''
-                        + ", atores= '" + atores + '\''
-                        + ", episodes= " + episodios;
+                + ", titulo= '" + titulo + '\''
+                + ", ano= " + ano + '\''
+                + ", totalTemporadas= " + totalTemporadas
+                + ", avaliacao= " + avaliacao
+                + ", sinopse= '" + sinopse + '\''
+                + ", poster= '" + poster + '\''
+                + ", atores= '" + atores + '\''
+                + ", episodes= " + episodios;
     }
 }

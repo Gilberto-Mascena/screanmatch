@@ -1,5 +1,6 @@
 package br.com.mascenadev.screenmatch.repository;
 
+import br.com.mascenadev.screenmatch.model.Episodes;
 import br.com.mascenadev.screenmatch.model.Serie;
 import br.com.mascenadev.screenmatch.model.enums.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,7 @@ import java.util.Optional;
 public interface SerieRepository extends JpaRepository<Serie, Long> {
 
     // Derived Query Methods
-    Optional<Serie>findByTituloContainingIgnoreCase(String nameOfSeries);
+    Optional<Serie> findByTituloContainingIgnoreCase(String nameOfSeries);
 
     List<Serie> findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(String nameOfActor, Double rating);
 
@@ -29,4 +30,7 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
     // JPQL method
     @Query("SELECT s FROM Serie s WHERE s.totalTemporadas <= :totalSeasons AND avaliacao >= :rating ORDER BY avaliacao DESC")
     List<Serie> seriesBySeasonsEvaluation(Integer totalSeasons, Double rating);
+
+    @Query("SELECT e FROM Serie s JOIN s    .episodios e WHERE e.titulo ILIKE %:excerptEpsode%")
+    List<Episodes> findByEpisodesExcerpt(String excerptEpsode);
 }

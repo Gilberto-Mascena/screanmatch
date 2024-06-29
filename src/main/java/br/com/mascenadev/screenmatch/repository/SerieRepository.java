@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface SerieRepository extends JpaRepository<Serie, Long> {
 
+    // Derived Query Methods
     Optional<Serie>findByTituloContainingIgnoreCase(String nameOfSeries);
 
     List<Serie> findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(String nameOfActor, Double rating);
@@ -18,8 +19,14 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
 
     List<Serie> findByGenero(Category category);
 
-    List<Serie> findByTotalTemporadasLessThanEqualAndAvaliacaoGreaterThanEqual(Integer totalSeasons, Double rating);
+    //List<Serie> findByTotalTemporadasLessThanEqualAndAvaliacaoGreaterThanEqual(Integer totalSeasons, Double rating);
 
+    /*
+    Native Query, consult the database directly, using SQL.
+    @Query(value = "SELECT * FROM series WHERE series.total_temporadas <= 5 AND avaliacao >= 7.5 ORDER BY avaliacao DESC", nativeQuery = true)
+    List<Serie> seriesBySeasonsEvaluation(Integer totalSeasons, Double rating);*/
+
+    // JPQL method
     @Query("SELECT s FROM Serie s WHERE s.totalTemporadas <= :totalSeasons AND avaliacao >= :rating ORDER BY avaliacao DESC")
     List<Serie> seriesBySeasonsEvaluation(Integer totalSeasons, Double rating);
 }

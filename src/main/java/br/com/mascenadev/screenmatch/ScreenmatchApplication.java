@@ -2,7 +2,7 @@ package br.com.mascenadev.screenmatch;
 
 import br.com.mascenadev.screenmatch.application.Main;
 import br.com.mascenadev.screenmatch.repository.SerieRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ScreenmatchApplication implements CommandLineRunner {
 
-    @Autowired
+    @Resource
     private SerieRepository serieRepository;
 
     public static void main(String[] args) {

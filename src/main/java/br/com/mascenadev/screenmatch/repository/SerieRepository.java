@@ -28,9 +28,12 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
     List<Serie> seriesBySeasonsEvaluation(Integer totalSeasons, Double rating);*/
 
     // JPQL method
-    @Query("SELECT s FROM Serie s WHERE s.totalTemporadas <= :totalSeasons AND avaliacao >= :rating ORDER BY avaliacao DESC")
+    @Query("SELECT s FROM Serie s WHERE s.totalTemporadas <= :totalSeasons AND s.avaliacao >= :rating ORDER BY s.avaliacao DESC")
     List<Serie> seriesBySeasonsEvaluation(Integer totalSeasons, Double rating);
 
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE e.titulo ILIKE %:excerptEpsode%")
     List<Episodes> findByEpisodesExcerpt(String excerptEpsode);
+
+    @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s = :serie ORDER BY e.avaliacao DESC LIMIT 5")
+    List<Episodes> topEpsodesBySeries(Serie serie);
 }

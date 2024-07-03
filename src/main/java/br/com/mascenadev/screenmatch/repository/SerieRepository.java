@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface SerieRepository extends JpaRepository<Serie, Long> {
 
+
     // Derived Query Methods
     Optional<Serie> findByTituloContainingIgnoreCase(String nameOfSeries);
 

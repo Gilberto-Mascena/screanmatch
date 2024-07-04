@@ -1,7 +1,6 @@
 package br.com.mascenadev.screanmatch.model.enums;
 
 public enum Category {
-
     ACAO("Action", "Ação"),
     ROMANCE("Romance", "Romance"),
     DRAMA("Drama", "Drama"),

@@ -7,7 +7,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class ChatGPTConsultation {
 
     public static String getTranslation(String text) {
-
         Dotenv dotenv = Dotenv.load();
         OpenAiService service = new OpenAiService(dotenv.get("OPENAI_KEY"));
         CompletionRequest request = CompletionRequest.builder()

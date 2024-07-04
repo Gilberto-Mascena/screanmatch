@@ -16,12 +16,10 @@ public class SerieService {
     private SerieRepository serieRepository;
 
     public List<SerieDTO> getAllSeries() {
-
         return convertToDTO(serieRepository.findAll());
     }
 
     public List<SerieDTO> getTop5Series() {
-
         return convertToDTO(serieRepository.findTop5ByOrderByAvaliacaoDesc());
     }
 
@@ -35,5 +33,9 @@ public class SerieService {
                         s.getAtores(),
                         s.getPoster(),
                         s.getSinopse())).collect(Collectors.toList());
+    }
+
+    public List<SerieDTO> getLaunches() {
+        return convertToDTO(serieRepository.findTop5ByOrderByEpisodiosAnoLancamentoDesc());
     }
 }

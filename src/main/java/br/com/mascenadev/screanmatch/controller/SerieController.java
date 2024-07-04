@@ -18,7 +18,6 @@ public class SerieController {
 
     @GetMapping
     public List<SerieDTO> getSeries() {
-
         return serieService.getAllSeries();
     }
 
@@ -26,5 +25,10 @@ public class SerieController {
 
     public List<SerieDTO> getTop5Series() {
         return serieService.getTop5Series();
+    }
+
+    @GetMapping("/lancamentos")
+    public List<SerieDTO> getLaunches() {
+        return serieService.getLaunches();
     }
 }

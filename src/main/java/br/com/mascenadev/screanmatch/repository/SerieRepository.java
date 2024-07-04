@@ -40,4 +40,7 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
 
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s = :serie AND YEAR(e.anoLancamento) >= :yearLaunch")
     List<Episodes> episodePerSeriesYear(Serie serie, int yearLaunch);
+
+    // Derived Query Methods
+    List<Serie> findTop5ByOrderByEpisodiosAnoLancamentoDesc();
 }

@@ -1,5 +1,6 @@
 package br.com.mascenadev.screanmatch.service;
 
+import br.com.mascenadev.screanmatch.dto.EpisodeDTO;
 import br.com.mascenadev.screanmatch.dto.SerieDTO;
 import br.com.mascenadev.screanmatch.model.Serie;
 import br.com.mascenadev.screanmatch.repository.SerieRepository;
@@ -42,9 +43,9 @@ public class SerieService {
 
     public SerieDTO getSerieById(Long id) {
         Optional<Serie> serie = serieRepository.findById(id);
-        Serie s = serie.get();
 
         if (serie.isPresent()) {
+            Serie s = serie.get();
             return new SerieDTO(s.getId(),
                     s.getTitulo(),
                     s.getTotalTemporadas(),
@@ -55,5 +56,29 @@ public class SerieService {
                     s.getSinopse());
         }
         return null;
+    }
+
+    public List<EpisodeDTO> getAllSeasons(Long id) {
+        Optional<Serie> serie = serieRepository.findById(id);
+
+        if (serie.isPresent()) {
+            Serie s = serie.get();
+            return s.getEpisodes().stream()
+                    .map(e -> new EpisodeDTO(
+                            e.getTemporada(),
+                            e.getTitulo(),
+                            e.getNumeroEpisodio()))
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    public List<EpisodeDTO> getSeasonByNumber(Long id, Integer numero) {
+        return serieRepository.episodesBySeason(id, numero).stream()
+                .map(e -> new EpisodeDTO(
+                        e.getTemporada(),
+                        e.getTitulo(),
+                        e.getNumeroEpisodio()))
+                .collect(Collectors.toList());
     }
 }

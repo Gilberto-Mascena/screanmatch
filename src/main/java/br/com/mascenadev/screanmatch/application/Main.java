@@ -2,7 +2,7 @@ package br.com.mascenadev.screanmatch.application;
 
 import br.com.mascenadev.screanmatch.model.DataSeasons;
 import br.com.mascenadev.screanmatch.model.DataSeries;
-import br.com.mascenadev.screanmatch.model.Episodes;
+import br.com.mascenadev.screanmatch.model.Episode;
 import br.com.mascenadev.screanmatch.model.Serie;
 import br.com.mascenadev.screanmatch.model.enums.Category;
 import br.com.mascenadev.screanmatch.repository.SerieRepository;
@@ -132,9 +132,9 @@ public class Main {
             }
             seasons.forEach(System.out::println);
 
-            List<Episodes> episodes = seasons.stream()
+            List<Episode> episodes = seasons.stream()
                     .flatMap((d -> d.episodios().stream()
-                            .map(e -> new Episodes(d.numero(), e))))
+                            .map(e -> new Episode(d.numero(), e))))
                     .collect(Collectors.toList());
             foundSeries.setEpisodes(episodes);
             serieRepository.save(foundSeries);
@@ -210,7 +210,7 @@ public class Main {
     private void searchEpsodeByExcerpt() {
         System.out.println("Digite o trecho do episódio desejado: ");
         var excerptEpsode = sc.nextLine();
-        List<Episodes> epsodeFound = serieRepository.findByEpisodesExcerpt(excerptEpsode);
+        List<Episode> epsodeFound = serieRepository.findByEpisodesExcerpt(excerptEpsode);
         epsodeFound.forEach(e ->
                 System.out.printf("Séries: '%s', Temporada - %s, Epsódios %s, Titulo do epsódio - '%s', Avaliação: %s\n",
                         e.getSerie().getTitulo(),
@@ -224,7 +224,7 @@ public class Main {
         searchSeriesByTitle();
         if (seriesSearch.isPresent()) {
             Serie serie = seriesSearch.get();
-            List<Episodes> topEpsodes = serieRepository.topEpsodesBySeries(serie);
+            List<Episode> topEpsodes = serieRepository.topEpsodesBySeries(serie);
             topEpsodes.forEach(e ->
                     System.out.printf("Séries: '%s', Temporadas - %s, Epsódios - %s, Titulo do epsódio - '%s', - Avaliação: %s\n",
                             e.getSerie().getTitulo(),
@@ -242,7 +242,7 @@ public class Main {
             System.out.println("Digite a data desejada  do lamçamento: ");
             var yearLaunch = sc.nextInt();
             sc.nextLine();
-            List<Episodes> episodeYear = serieRepository.episodePerSeriesYear(serie, yearLaunch);
+            List<Episode> episodeYear = serieRepository.episodePerSeriesYear(serie, yearLaunch);
             episodeYear.forEach(System.out::println);
         }
     }

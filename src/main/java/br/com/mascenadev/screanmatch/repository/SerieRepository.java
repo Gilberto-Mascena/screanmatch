@@ -1,6 +1,6 @@
 package br.com.mascenadev.screanmatch.repository;
 
-import br.com.mascenadev.screanmatch.model.Episodes;
+import br.com.mascenadev.screanmatch.model.Episode;
 import br.com.mascenadev.screanmatch.model.Serie;
 import br.com.mascenadev.screanmatch.model.enums.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,14 +33,20 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
     List<Serie> seriesBySeasonsEvaluation(Integer totalSeasons, Double rating);
 
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE e.titulo ILIKE %:excerptEpsode%")
-    List<Episodes> findByEpisodesExcerpt(String excerptEpsode);
+    List<Episode> findByEpisodesExcerpt(String excerptEpsode);
 
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s = :serie ORDER BY e.avaliacao DESC LIMIT 5")
-    List<Episodes> topEpsodesBySeries(Serie serie);
+    List<Episode> topEpsodesBySeries(Serie serie);
 
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s = :serie AND YEAR(e.anoLancamento) >= :yearLaunch")
-    List<Episodes> episodePerSeriesYear(Serie serie, int yearLaunch);
+    List<Episode> episodePerSeriesYear(Serie serie, int yearLaunch);
 
-    @Query("SELECT s FROM Serie s " + "JOIN s.episodios e " + "GROUP BY s " + "ORDER BY MAX(e.anoLancamento) DESC LIMIT 5")
+    @Query("SELECT s FROM Serie s "
+           + "JOIN s.episodios e "
+           + "GROUP BY s "
+           + "ORDER BY MAX(e.anoLancamento) DESC LIMIT 5")
     List<Serie> latestReleases();
+
+    @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s.id = :id AND e.temporada = :numero")
+    List<Episode> episodesBySeason(Long id, Integer numero);
 }

@@ -1,5 +1,6 @@
 package br.com.mascenadev.screanmatch.controller;
 
+import br.com.mascenadev.screanmatch.dto.EpisodeDTO;
 import br.com.mascenadev.screanmatch.dto.SerieDTO;
 import br.com.mascenadev.screanmatch.service.SerieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,15 @@ public class SerieController {
     @GetMapping("/{id}")
     public SerieDTO getSerieById(@PathVariable Long id) {
         return serieService.getSerieById(id);
+    }
+
+    @GetMapping("/{id}/temporadas/todas")
+    public List<EpisodeDTO> getAllSeasons(@PathVariable Long id) {
+        return serieService.getAllSeasons(id);
+    }
+
+    @GetMapping("/{id}/temporadas/{numero}")
+    public List<EpisodeDTO> getSeasonByNumber(@PathVariable Long id, @PathVariable Integer numero) {
+        return serieService.getSeasonByNumber(id, numero);
     }
 }

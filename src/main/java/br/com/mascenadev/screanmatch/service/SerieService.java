@@ -1,6 +1,7 @@
 package br.com.mascenadev.screanmatch.service;
 
 import br.com.mascenadev.screanmatch.dto.SerieDTO;
+import br.com.mascenadev.screanmatch.model.Serie;
 import br.com.mascenadev.screanmatch.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,16 @@ public class SerieService {
 
     public List<SerieDTO> getAllSeries() {
 
-        return serieRepository.findAll()
-                .stream()
+        return convertToDTO(serieRepository.findAll());
+    }
+
+    public List<SerieDTO> getTop5Series() {
+
+        return convertToDTO(serieRepository.findTop5ByOrderByAvaliacaoDesc());
+    }
+
+    private List<SerieDTO> convertToDTO(List<Serie> series) {
+        return series.stream()
                 .map(s -> new SerieDTO(s.getId(),
                         s.getTitulo(),
                         s.getTotalTemporadas(),

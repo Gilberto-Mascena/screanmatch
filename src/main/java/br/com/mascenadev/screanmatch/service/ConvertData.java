@@ -1,4 +1,4 @@
-package br.com.mascenadev.screenmatch.service;
+package br.com.mascenadev.screanmatch.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

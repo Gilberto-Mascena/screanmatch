@@ -1,4 +1,4 @@
-package br.com.mascenadev.screenmatch.model;
+package br.com.mascenadev.screanmatch.model;
 
 import jakarta.persistence.*;
 

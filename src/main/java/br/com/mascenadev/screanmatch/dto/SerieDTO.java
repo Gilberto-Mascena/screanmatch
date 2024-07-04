@@ -1,6 +1,6 @@
-package br.com.mascenadev.screenmatch.dto;
+package br.com.mascenadev.screanmatch.dto;
 
-import br.com.mascenadev.screenmatch.model.enums.Category;
+import br.com.mascenadev.screanmatch.model.enums.Category;
 
 public record SerieDTO(Long id,
                        String titulo,

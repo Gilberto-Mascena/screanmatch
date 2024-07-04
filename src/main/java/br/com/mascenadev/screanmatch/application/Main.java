@@ -1,13 +1,13 @@
-package br.com.mascenadev.screenmatch.application;
+package br.com.mascenadev.screanmatch.application;
 
-import br.com.mascenadev.screenmatch.model.DataSeasons;
-import br.com.mascenadev.screenmatch.model.DataSeries;
-import br.com.mascenadev.screenmatch.model.Episodes;
-import br.com.mascenadev.screenmatch.model.Serie;
-import br.com.mascenadev.screenmatch.model.enums.Category;
-import br.com.mascenadev.screenmatch.repository.SerieRepository;
-import br.com.mascenadev.screenmatch.service.ConsumeApi;
-import br.com.mascenadev.screenmatch.service.ConvertData;
+import br.com.mascenadev.screanmatch.model.DataSeasons;
+import br.com.mascenadev.screanmatch.model.DataSeries;
+import br.com.mascenadev.screanmatch.model.Episodes;
+import br.com.mascenadev.screanmatch.model.Serie;
+import br.com.mascenadev.screanmatch.model.enums.Category;
+import br.com.mascenadev.screanmatch.repository.SerieRepository;
+import br.com.mascenadev.screanmatch.service.ConsumeApi;
+import br.com.mascenadev.screanmatch.service.ConvertData;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.context.annotation.Profile;
 

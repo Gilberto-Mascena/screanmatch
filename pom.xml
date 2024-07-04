@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com.mascenadev</groupId>
-    <artifactId>sreenmatch</artifactId>
+    <artifactId>sreanmatch</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>screenmatch</name>
-    <description>Primeiro projeto spring sem web</description>
+    <description>Primeiro projeto spring web</description>
     <properties>
         <java.version>21</java.version>
     </properties>

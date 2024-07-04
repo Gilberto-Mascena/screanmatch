@@ -1,7 +1,7 @@
-package br.com.mascenadev.screenmatch.model;
+package br.com.mascenadev.screanmatch.model;
 
-import br.com.mascenadev.screenmatch.model.enums.Category;
-import br.com.mascenadev.screenmatch.service.ChatGPTConsultation;
+import br.com.mascenadev.screanmatch.model.enums.Category;
+import br.com.mascenadev.screanmatch.service.ChatGPTConsultation;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

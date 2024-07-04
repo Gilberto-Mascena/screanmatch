@@ -1,8 +1,8 @@
-package br.com.mascenadev.screenmatch.repository;
+package br.com.mascenadev.screanmatch.repository;
 
-import br.com.mascenadev.screenmatch.model.Episodes;
-import br.com.mascenadev.screenmatch.model.Serie;
-import br.com.mascenadev.screenmatch.model.enums.Category;
+import br.com.mascenadev.screanmatch.model.Episodes;
+import br.com.mascenadev.screanmatch.model.Serie;
+import br.com.mascenadev.screanmatch.model.enums.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

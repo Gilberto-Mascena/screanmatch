@@ -1,7 +1,7 @@
-package br.com.mascenadev.screenmatch.controller;
+package br.com.mascenadev.screanmatch.controller;
 
-import br.com.mascenadev.screenmatch.dto.SerieDTO;
-import br.com.mascenadev.screenmatch.repository.SerieRepository;
+import br.com.mascenadev.screanmatch.dto.SerieDTO;
+import br.com.mascenadev.screanmatch.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,5 +27,10 @@ public class SerieController {
                         s.getAtores(),
                         s.getPoster(),
                         s.getSinopse())).collect(Collectors.toList());
+    }
+
+    @GetMapping("/home")
+    public String getHome() {
+        return "Hello World!";
     }
 }

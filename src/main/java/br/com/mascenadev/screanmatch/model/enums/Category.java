@@ -1,4 +1,4 @@
-package br.com.mascenadev.screenmatch.model.enums;
+package br.com.mascenadev.screanmatch.model.enums;
 
 public enum Category {
 

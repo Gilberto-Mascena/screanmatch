@@ -3,6 +3,7 @@ package br.com.mascenadev.screanmatch.service;
 import br.com.mascenadev.screanmatch.dto.EpisodeDTO;
 import br.com.mascenadev.screanmatch.dto.SerieDTO;
 import br.com.mascenadev.screanmatch.model.Serie;
+import br.com.mascenadev.screanmatch.model.enums.Category;
 import br.com.mascenadev.screanmatch.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,5 +81,10 @@ public class SerieService {
                         e.getTitulo(),
                         e.getNumeroEpisodio()))
                 .collect(Collectors.toList());
+    }
+
+    public List<SerieDTO> getSeriesByCategory(String genero) {
+        Category category = Category.fromStringPortuguese(genero);
+        return convertToDTO(serieRepository.findByGenero(category));
     }
 }

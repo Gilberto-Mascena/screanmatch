@@ -1,0 +1,14 @@
+#DATABASE
+spring :
+  datasource :
+    driver-class-name : ${DB_DRIVER}
+    url : ${DB_URL}
+    username : ${DB_USER}
+    password : ${DB_PASSWORD}
+
+  #JPA SQL
+  jpa :
+    show-sql : ${JPA_HIBERNATE_SHOW_SQL}
+    format-sql : ${JPA_HIBERNATE_FORMAT_SQL}
+    hibernate.ddl-auto: ${JPA_HIBERNATE_DDL_AUTO}
+    dialect : ${JPA_HIBERNATE_DIALECT}

@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Profile;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Profile("dev")
 public class Main {
 
     private final Scanner sc = new Scanner(System.in);

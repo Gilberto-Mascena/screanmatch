@@ -1,0 +1,14 @@
+#DATABASE
+spring :
+  datasource :
+    driver-class-name :
+    url :
+    username :
+    password :
+
+#JPA SQL
+  jpa :
+    show-sql :
+    format-sql :
+    hibernate.ddl-auto:
+    dialect :

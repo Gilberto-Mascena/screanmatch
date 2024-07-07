@@ -1,0 +1,8 @@
+#DATABASE
+spring:
+  profiles:
+    active : test
+
+
+
+

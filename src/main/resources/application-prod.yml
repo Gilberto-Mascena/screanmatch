@@ -7,8 +7,10 @@ spring :
     password :
 
   #JPA SQL
-  jpa :
-    show-sql :
-    format-sql :
-    hibernate.ddl-auto:
-    dialect :
+  jpa:
+    show-sql:
+    properties:
+      hibernate:
+        format_sql:
+        ddl-auto:
+        dialect:
